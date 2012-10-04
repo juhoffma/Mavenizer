@@ -6,7 +6,7 @@ It does it by generating a parent pom that holds all the dependencies. for your 
 
 This Skript needs nokogiri installed. You can install it using the gem system
 
-gem install nokogiri
+    gem install nokogiri
 
 It will then take jars it finds in these Directories
 
@@ -40,3 +40,65 @@ You can adjust the paths search by modifying the script starting from Line 118. 
 	    -t, --dry-run                    Do not do anything, just print what would be done
 	    -h, --help                       Display this screen
 
+This script will generate a bom (bill of materials) pom file, that will hold dependencies to all the jar files that
+are found in the directory you specify. It will try to determine the version of the jar file by looking at the filename.
+If the filename adheres to the maven convention, it will use that version number. If there is no version in the file,
+it will use the set default see `-v`Option.
+
+The bom file looks like
+
+    <?xml version="1.0"?>
+    <project>
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>com.redhat</groupId>
+      <artifactId>soa-p-bom</artifactId>
+      <version>5.3.0-SOA-P</version>
+      <packaging>pom</packaging>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>com.redhat</groupId>
+            <artifactId>activation</artifactId>
+            <version>5.3.0-SOA-P</version>
+          </dependency>
+          .
+          .
+          .
+        </dependencies>
+      </dependencyManagement>
+    </project>
+
+The script also generates a quick-start pom.xml that you can use in your client project. The generated pom.xml
+
+    <?xml version="1.0"?>
+    <project>
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>your-group-id</groupId>
+      <artifactId>your-project-name</artifactId>
+      <packaging>jar</packaging>
+      <name>Enter the Name of your Project</name>
+      <version>0.0.1-SNAPSHOT</version>
+      <dependencyManagement>
+        <dependencies>
+          <dependency>
+            <groupId>com.redhat</groupId>
+            <artifactId>soa-p-bom</artifactId>
+            <version>5.3.0-SOA-P</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
+        </dependencies>
+      </dependencyManagement>
+      <dependencies>
+        <dependency>
+          <groupId>your-other-dependency</groupId>
+          <artifactId>artifact</artifactId>
+          <version>1.0.0</version>
+        </dependency>
+      </dependencies>
+    </project>
+
+as you can see, you still have to customize it, but you can get started quickly.
+
+Have Fun
+========

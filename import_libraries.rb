@@ -212,6 +212,9 @@ jarlist.each_with_index do |jar, i|
   if options[:dry_run]
     puts "mvn install:install-file -Dfile=#{jar.filename} -DgroupId=com.redhat -DartifactId=#{jar.artifactId} -Dversion=#{jar.version} -Dpackaging=jar -DgeneratePom=true -DcreateChecksum=true"
   else
+    if i % 5 == 0
+      puts "I have imported #{i} of #{jarlist.length} JAR Files"
+    end
     if options[:verbose]
       puts "mvn install:install-file -Dfile=#{jar.filename} -DgroupId=com.redhat -DartifactId=#{jar.artifactId} -Dversion=#{jar.version} -Dpackaging=jar -DgeneratePom=true -DcreateChecksum=true"
     end
