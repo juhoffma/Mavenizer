@@ -182,7 +182,7 @@ builder = Nokogiri::XML::Builder.new do |xml|
           xml.groupId     options[:groupid]
           xml.artifactId  "soa-p-bom"
           xml.version     options[:version]
-          xml.type        "jar"
+          xml.type        "pom"
           xml.scope       "import"
         }
       }
