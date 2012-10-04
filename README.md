@@ -4,6 +4,10 @@ Mavenizer
 This Skript helps you mavenize your Application Server. It will scan your SOA-P Installation and put the jar files into your local maven repository. 
 It does it by generating a parent pom that holds all the dependencies. for your Installation. All it needs to run is your SOA-P Installation Directory.
 
+This Skript needs nokogiri installed. You can install it using the gem system
+
+gem install nokogiri
+
 It will then take jars it finds in these Directories
 
 - /jboss-esb/client
